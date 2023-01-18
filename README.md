@@ -1,8 +1,15 @@
 # Segugio
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/segugio`. To experiment with that code, run `bin/console` for an interactive prompt.
+Segugio is a Ruby gem that simplifies the implementation of search functionality in Rails using ActiveRecord.
+With this gem, you can easily search, filter and sort results in a simple and intuitive way.
 
-TODO: Delete this and the text above, and describe your gem
+It is built on ActiveRecord and provides a clean and easy-to-use interface for creating advanced search queries.
+It also provides a variety of utility methods for handling results, allowing you to efficiently sort and filter data.
+
+In addition, Segugio is fully customizable, supporting the creation of custom queries to meet the specific needs of your applications.
+
+In summary, Segugio is an essential tool for anyone looking to implement advanced search functionality in Rails using ActiveRecord,
+providing a simple and efficient solution for managing the data of your applications.
 
 ## Installation
 
@@ -16,17 +23,37 @@ If bundler is not being used to manage dependencies, install the gem by executin
 
 ## Usage
 
-TODO: Write usage instructions here
+```ruby
+# /app/models/user.rb
 
-## Development
+class User < ApplicationRecord
+    # Fields to be used for records search by string (text search)
+    query_fields: :id, :email, :username, :first_name, :last_name
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+    # Fields that can be used to filter records by exact value
+    filter_fields: :id, :email, :username, :role
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and the created tag, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+    # Fields that can be used to order returned results
+    order_fields: :id, :email, :username, :first_name, :last_name, :created_at, :updated_at
+    # ... other code ...
+end
+```
+
+Search for users containing `John Doe` in `query_fields`:
+
+```ruby
+User.search(query: 'John Doe')
+```
+
+Filter users by role and return results ordered by `email` and `first_name`:
+
+```ruby
+User.search(filters: {role: %w[admin moderator]}, order: %i[email first_name])
+```
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/segugio. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/[USERNAME]/segugio/blob/master/CODE_OF_CONDUCT.md).
+Bug reports and pull requests are welcome on GitHub at https://github.com/demetra-it/segugio. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/demetra-it/segugio/blob/master/CODE_OF_CONDUCT.md).
 
 ## License
 
@@ -34,4 +61,4 @@ The gem is available as open source under the terms of the [MIT License](https:/
 
 ## Code of Conduct
 
-Everyone interacting in the Segugio project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/segugio/blob/master/CODE_OF_CONDUCT.md).
+Everyone interacting in the Segugio project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/demetra-it/segugio/blob/master/CODE_OF_CONDUCT.md).

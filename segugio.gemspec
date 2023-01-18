@@ -1,24 +1,33 @@
 # frozen_string_literal: true
 
-require_relative "lib/segugio/version"
+require_relative 'lib/segugio/version'
 
 Gem::Specification.new do |spec|
-  spec.name = "segugio"
+  spec.name = 'segugio'
   spec.version = Segugio::VERSION
-  spec.authors = ["Groza Sergiu"]
-  spec.email = ["groza@opinioni.net"]
+  spec.authors = ['Groza Sergiu']
+  spec.email = ['groza@opinioni.net']
 
-  spec.summary = "TODO: Write a short summary, because RubyGems requires one."
-  spec.description = "TODO: Write a longer description or delete this line."
-  spec.homepage = "TODO: Put your gem's website or public repo URL here."
-  spec.license = "MIT"
-  spec.required_ruby_version = ">= 2.6.0"
+  spec.summary = 'A Ruby gem for fast and easy implementation of search functionality in Rails with ActiveRecord.'
+  spec.description = <<~DESC
+    Segugio is a Ruby gem that simplifies the implementation of search functionality in Rails using ActiveRecord.
+    With this gem, you can easily search, filter and sort results in a simple and intuitive way.
 
-  spec.metadata["allowed_push_host"] = "TODO: Set to your gem server 'https://example.com'"
+    It is built on ActiveRecord and provides a clean and easy-to-use interface for creating advanced search queries.
+    It also provides a variety of utility methods for handling results, allowing you to efficiently sort and filter data.
 
-  spec.metadata["homepage_uri"] = spec.homepage
-  spec.metadata["source_code_uri"] = "TODO: Put your gem's public repo URL here."
-  spec.metadata["changelog_uri"] = "TODO: Put your gem's CHANGELOG.md URL here."
+    In addition, Segugio is fully customizable, supporting the creation of custom queries to meet the specific needs of your applications.
+
+    In summary, Segugio is an essential tool for anyone looking to implement advanced search functionality in Rails using ActiveRecord,
+    providing a simple and efficient solution for managing the data of your applications.
+  DESC
+  spec.homepage = 'https://github.com/demetra-it/segugio'
+  spec.license = 'MIT'
+  spec.required_ruby_version = '>= 2.6.0'
+
+  spec.metadata['homepage_uri'] = spec.homepage
+  spec.metadata['source_code_uri'] = spec.homepage
+  spec.metadata['changelog_uri'] = "#{spec.homepage}/blob/master/CHANGELOG.md"
 
   # Specify which files should be added to the gem when it is released.
   # The `git ls-files -z` loads the files in the RubyGem that have been added into git.
@@ -27,9 +36,12 @@ Gem::Specification.new do |spec|
       (f == __FILE__) || f.match(%r{\A(?:(?:bin|test|spec|features)/|\.(?:git|travis|circleci)|appveyor)})
     end
   end
-  spec.bindir = "exe"
+  spec.bindir = 'exe'
   spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
-  spec.require_paths = ["lib"]
+  spec.require_paths = ['lib']
+
+  spec.add_development_dependency 'bundler', '~> 2.0'
+  spec.add_dependency 'activerecord', '>= 5.2.0'
 
   # Uncomment to register a new dependency of your gem
   # spec.add_dependency "example-gem", "~> 1.0"
