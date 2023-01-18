@@ -25,7 +25,7 @@ module ActiveRecord
 
       # Implements the `search` method for the model.
       def search(query: '', filters: {}, exclude: {}, order: [], configs: {})
-        ActiveRecordSearch.new(
+        Segugio::Search.new(
           self,
           query: query,
           filters: filters,
