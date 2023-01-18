@@ -14,7 +14,7 @@ module Segugio
 
       parse_options
 
-      @result = model.all
+      @result = relation.all
 
       configure!
       generate_search_result!
@@ -71,7 +71,7 @@ module Segugio
 
       # Generate an array with conditions (ex. ['name ILIKE ? OR title ILIKE ?', '%xyz%', '%xyz%'])
       conditions = []
-      conditions << @query_fields.map { |field| "#{@model.table_name}.#{field}::text ILIKE ?" }.join(' OR ')
+      conditions << @query_fields.map { |field| "#{@relation.table_name}.#{field}::text ILIKE ?" }.join(' OR ')
       @query_fields.each do
         conditions << "%#{@query}%"
       end
@@ -120,7 +120,7 @@ module Segugio
           # When order item is a String or a Symbol, just check
           # if it's valid and use that value as order field
           if @order_fields.include?(item.to_s)
-            result << "#{@model.table_name}.#{item}"
+            result << "#{@relation.table_name}.#{item}"
           else
             # Report invalid order item
             logger.warn "Invalid order item: #{item.inspect}"
@@ -146,7 +146,7 @@ module Segugio
     # Build order field from a hash like { field: 'name', asc: true|false|nil, nulls_first: true|false|nil }
     def build_order_field_from_hash(data)
       # Use field name as base for order field
-      field = "#{@model.table_name}.#{data[:field]}"
+      field = "#{@relation.table_name}.#{data[:field]}"
 
       if data.key?(:asc)
         # When :asc is specified, add "ASC" or "DESC" when its value is "true" or "false" respectively
