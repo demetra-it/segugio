@@ -8,8 +8,16 @@ module Segugio
 
     def initialize(relation, options = {})
       @relation = relation
-      @options = options.to_h.with_indifferent_access
+      options = options.to_h.with_indifferent_access
       @configs = options[:configs] || {}
+      @options = options
+
+      parse_options
+
+      @result = model.all
+
+      configure!
+      generate_search_result!
     end
 
     def collection_name
