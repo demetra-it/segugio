@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require_relative 'segugio/version'
-require_relative 'segugio/search'
+require_relative 'segugio/searchable'
 require_relative 'segugio/wrappers/active_record/base'
 
 module Segugio

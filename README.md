@@ -24,7 +24,7 @@ If bundler is not being used to manage dependencies, install the gem by executin
 ## Usage
 
 ```ruby
-# /app/models/user.rb
+# app/models/user.rb
 
 class User < ApplicationRecord
     # Fields to be used for records search by string (text search)
@@ -49,6 +49,57 @@ Filter users by role and return results ordered by `email` and `first_name`:
 
 ```ruby
 User.search(filters: {role: %w[admin moderator]}, order: %i[email first_name])
+```
+
+## Custom `search` method name
+
+Sometimes you might want to call `search` method with a different name (e.g. `my_search`), in order to avoid collisions with already existing `search` method. For doing so you can specify a custom search method name for Segugio:
+
+```ruby
+# config/initializers/segugio.rb
+require 'segugio'
+
+Segugio.search_method_name = :my_search
+```
+
+Then to search for users do:
+
+```ruby
+User.my_search(query: 'John Doe')
+```
+
+## Manually activate Segugio
+
+By default Segugio will wrap `ActiveRecord::Base` in order to automatically add `search`, `query_fields`, `filter_fields` and `order_fields` methods. If you don't wont this behaviour (i.e. already defined a method called `search` in your model), you can load Segugio manually and add its methods only to desired models.
+
+For doing so, you need to add `require: false` to your Gemfile:
+
+```ruby
+# Gemfile
+
+gem 'segugio', require: false
+```
+
+This will disable autoload of Segugio gem in yout application.
+
+Then, to add Segugio methods to a specific model, you can do:
+
+```ruby
+require 'segugio/searchable'
+
+class User < ApplicationRecord
+  extend Segugio::Searchable
+
+  query_fields :id, :email, :username, :first_name, :last_name
+
+  # ... other code ...
+end
+```
+
+Now you'll be able to user `search` method on `User` model:
+
+```ruby
+User.search(query: 'john')
 ```
 
 ## Contributing
