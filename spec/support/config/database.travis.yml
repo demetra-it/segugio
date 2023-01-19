@@ -1,0 +1,7 @@
+test:
+  adapter: postgresql
+  encoding: unicode
+  host: localhost
+  database: segugio_test
+  user: postgresql
+  port: 5432

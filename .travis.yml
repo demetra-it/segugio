@@ -3,4 +3,18 @@ language: ruby
 cache: bundler
 rvm:
   - 3.1.2
+  - 2.7.5
+  - 2.6.6
+
 before_install: gem install bundler -v 2.3.24
+
+services:
+  - postgresql
+
+before_script:
+  - cp rspec/support/config/database.yml.travis rspec/support/config/database.yml
+  - psql -c 'create database segugio_test;' -U postgres
+
+script:
+  - bundle exec rspec
+
