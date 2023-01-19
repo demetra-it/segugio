@@ -41,7 +41,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.add_development_dependency 'bundler', '~> 2.0'
-  spec.add_runtime_dependency 'activerecord', '~> 5.2', '>= 5.2.0'
+  spec.add_dependency 'activerecord', '~> 7', '>= 4.0'
 
   # Uncomment to register a new dependency of your gem
   # spec.add_dependency "example-gem", "~> 1.0"
