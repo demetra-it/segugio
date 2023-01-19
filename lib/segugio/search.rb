@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'service/utils'
+
 module Segugio
   # Implements a feature for generic search, that allows to search using ILIKE operator, filter records by exact value
   # and specify result order.
@@ -25,7 +27,7 @@ module Segugio
     end
 
     def logger
-      @logger ||= Rails.logger
+      @logger ||= ActiveRecord::Base.logger
     end
 
     private
@@ -71,7 +73,7 @@ module Segugio
 
       # Generate an array with conditions (ex. ['name ILIKE ? OR title ILIKE ?', '%xyz%', '%xyz%'])
       conditions = []
-      conditions << @query_fields.map { |field| "#{@relation.table_name}.#{field}::text ILIKE ?" }.join(' OR ')
+      conditions << @query_fields.map { |field| %("#{collection_name}"."#{field}"::text ILIKE ?) }.join(' OR ')
       @query_fields.each do
         conditions << "%#{@query}%"
       end
@@ -85,7 +87,7 @@ module Segugio
       # Iterate over @filter_fields and set filter conditions on result
       @filter_fields.each do |column|
         # TODO: handle filters on array columns
-        @result = @result.where(@collection_name => { column => @filters[column] }) if @filters[column]
+        @result = @result.where(collection_name => { column => @filters[column] }) if @filters[column]
       end
 
       # Warn about invalid filter fields
@@ -97,7 +99,7 @@ module Segugio
     def apply_exclude!
       # Iterate over @filter_fields and set exclude conditions on result
       @filter_fields.each do |column|
-        @result = @result.where.not(@collection_name => { column => @exclude[column] }) if @exclude[column]
+        @result = @result.where.not(collection_name => { column => @exclude[column] }) if @exclude[column]
       end
 
       # Warn about invalid exclude fields
@@ -120,7 +122,7 @@ module Segugio
           # When order item is a String or a Symbol, just check
           # if it's valid and use that value as order field
           if @order_fields.include?(item.to_s)
-            result << "#{@relation.table_name}.#{item}"
+            result << %("#{collection_name}"."#{item}" ASC)
           else
             # Report invalid order item
             logger.warn "Invalid order item: #{item.inspect}"
@@ -146,7 +148,7 @@ module Segugio
     # Build order field from a hash like { field: 'name', asc: true|false|nil, nulls_first: true|false|nil }
     def build_order_field_from_hash(data)
       # Use field name as base for order field
-      field = "#{@relation.table_name}.#{data[:field]}"
+      field = %("#{collection_name}"."#{data[:field]}")
 
       if data.key?(:asc)
         # When :asc is specified, add "ASC" or "DESC" when its value is "true" or "false" respectively
