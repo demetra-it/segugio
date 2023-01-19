@@ -37,7 +37,7 @@ jobs:
       - name: Install gems
         run: bundle install
       - name: Configure database
-        run: cp .ci.database.yml rspec/support/config/database.yml
+        run: cp .ci.database.yml spec/support/config/database.yml
       - name: Run tests
         run: bundle exec rspec
 
