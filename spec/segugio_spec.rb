@@ -20,6 +20,15 @@ RSpec.describe Segugio do
       let(:query_str) { 'post' }
       subject { Post.search(query: query_str) }
 
+      Post.query_fields.each do |field|
+        it "(by #{field})" do
+          p = Post.all.sample
+          result = Post.search(query: p.send(field))
+          expect(result.count).to be_positive
+          expect(result.map { |post| post.send(field) }).to include(p.send(field))
+        end
+      end
+
       it 'should generate a correct SQL query' do
         Post.query_fields.each do |field|
           expect(subject.to_sql).to match(/WHERE(.*)"posts"."#{field}"::text ILIKE '%#{query_str}%'/)
