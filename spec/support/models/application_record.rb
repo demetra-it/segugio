@@ -6,7 +6,7 @@ class ApplicationRecord < ActiveRecord::Base
   def self.define_table(&block)
     connection = ActiveRecord::Base.connection
 
-    connection.drop_table table_name, if_exists: true
+    connection.drop_table table_name if connection.table_exists?(table_name)
 
     connection.create_table table_name, &block
   end

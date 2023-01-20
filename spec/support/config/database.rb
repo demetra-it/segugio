@@ -28,8 +28,8 @@ end
 
 db_config = YAML.load_file(db_config_file)
 
-if ActiveRecord.version < Gem::Version.new('4.2.6')
-  # ActiveRecord < 4.2.5 doesn't support PostgreSQL >= 12 because of
+if ActiveRecord.version < Gem::Version.new('5.0')
+  # ActiveRecord < 5 doesn't support PostgreSQL >= 12 because of
   # removal of `client_min_messages: panic` parameter.
   # We're going to monkey patch PostgreSQLAdapter in order
   # to set `client_min_messages: warning` instead.
