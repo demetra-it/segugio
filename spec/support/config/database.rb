@@ -28,10 +28,27 @@ end
 
 db_config = YAML.load_file(db_config_file)
 
+if ActiveRecord.version < Gem::Version.new('4.2.6')
+  # ActiveRecord < 4.2.5 doesn't support PostgreSQL >= 12 because of
+  # removal of `client_min_messages: panic` parameter.
+  # We're going to monkey patch PostgreSQLAdapter in order
+  # to set `client_min_messages: warning` instead.
+  require 'active_record/connection_adapters/postgresql_adapter'
+
+  class ActiveRecord::ConnectionAdapters::PostgreSQLAdapter
+    def set_standard_conforming_strings
+      old, self.client_min_messages = client_min_messages, 'warning'
+      execute('SET standard_conforming_strings = on', 'SCHEMA') rescue nil
+    ensure
+      self.client_min_messages = old
+    end
+  end
+end
+
 if ActiveRecord.version < Gem::Version.new('6.0')
   module Rails
     def self.env
-      ENV['RAILS_ENV']
+      ENV.fetch('RAILS_ENV', nil)
     end
   end
 
