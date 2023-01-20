@@ -8,12 +8,12 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
-    activemodel (7.0.4)
-      activesupport (= 7.0.4)
-    activerecord (7.0.4)
-      activemodel (= 7.0.4)
-      activesupport (= 7.0.4)
-    activesupport (7.0.4)
+    activemodel (7.0.4.1)
+      activesupport (= 7.0.4.1)
+    activerecord (7.0.4.1)
+      activemodel (= 7.0.4.1)
+      activesupport (= 7.0.4.1)
+    activesupport (7.0.4.1)
       concurrent-ruby (~> 1.0, >= 1.0.2)
       i18n (>= 1.6, < 2)
       minitest (>= 5.1)
@@ -29,14 +29,14 @@ GEM
     diff-lcs (1.5.0)
     factory_bot (6.2.1)
       activesupport (>= 5.0.0)
-    faker (2.19.0)
-      i18n (>= 1.6, < 2)
+    faker (3.1.0)
+      i18n (>= 1.8.11, < 2)
     i18n (1.12.0)
       concurrent-ruby (~> 1.0)
     method_source (1.0.0)
     minitest (5.17.0)
     pg (1.4.5)
-    pry (0.14.1)
+    pry (0.14.2)
       coderay (~> 1.1)
       method_source (~> 1.0)
     rake (13.0.6)
@@ -64,15 +64,15 @@ PLATFORMS
 
 DEPENDENCIES
   bundler (~> 2.0)
-  database_cleaner (~> 2.0.1)
-  factory_bot (~> 6.2.1)
-  faker (~> 2.19.0)
-  pg (~> 1.4.5)
-  pry (~> 0.14.0)
-  rake (~> 13.0)
-  rspec (~> 3.12.0)
+  database_cleaner
+  factory_bot
+  faker
+  pg
+  pry
+  rake
+  rspec
   segugio!
-  shoulda-matchers (~> 5.3.0)
+  shoulda-matchers
 
 BUNDLED WITH
-   2.3.24
+   2.3.6

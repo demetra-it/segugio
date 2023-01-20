@@ -26,7 +26,7 @@ end
 
 db_config = YAML.load_file(db_config_file)
 
-ActiveRecord::Base.configurations = ActiveRecord::DatabaseConfigurations.new(db_config)
+ActiveRecord::Base.configurations = ActiveRecord.version < Gem::Version.new('6.0') ? db_config : ActiveRecord::DatabaseConfigurations.new(db_config)
 
 log_dir = File.join(File.expand_path('../../..', __dir__), 'log')
 FileUtils.mkdir_p(log_dir)

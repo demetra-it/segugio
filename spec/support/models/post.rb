@@ -9,7 +9,7 @@ class Post < ApplicationRecord
     t.string  :status,    null: false
     t.integer :author_id
 
-    t.timestamps
+    t.timestamps null: false
   end
 
   # Specify the search parameters for the Posts.
