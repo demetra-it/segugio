@@ -10,7 +10,7 @@ RSpec.describe Segugio do
     subject { Post.first }
     before { create_list(:post, 20) }
 
-    it { should be_persisted }
+    it { should be_persisted } if ActiveRecord.version >= Gem::Version.new('5.0')
 
     it 'should have 20 Post records' do
       expect(Post.count).to eq(20)

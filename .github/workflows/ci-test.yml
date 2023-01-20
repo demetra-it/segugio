@@ -42,15 +42,38 @@ jobs:
         exclude:
           - ruby: "2.6"
             rails: "7.0"
+
+          - ruby: "2.7"
+            rails: "4.0"
+          - ruby: "2.7"
+            rails: "4.1"
+          - ruby: "2.7"
+            rails: "4.2"
+
           - ruby: "3.0"
             rails: "4.0"
           - ruby: "3.0"
             rails: "4.1"
           - ruby: "3.0"
+            rails: "4.2"
+          - ruby: "3.0"
             rails: "5.0"
           - ruby: "3.0"
             rails: "5.1"
           - ruby: "3.0"
+            rails: "5.2"
+
+          - ruby: "3.1"
+            rails: "4.0"
+          - ruby: "3.1"
+            rails: "4.1"
+          - ruby: "3.1"
+            rails: "4.2"
+          - ruby: "3.1"
+            rails: "5.0"
+          - ruby: "3.1"
+            rails: "5.1"
+          - ruby: "3.1"
             rails: "5.2"
 
     env:

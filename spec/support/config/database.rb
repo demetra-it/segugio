@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 ENV['RAILS_ENV'] = 'test'
 ENV['RAKE_ENV'] = 'test'
 
@@ -26,7 +28,17 @@ end
 
 db_config = YAML.load_file(db_config_file)
 
-ActiveRecord::Base.configurations = ActiveRecord.version < Gem::Version.new('6.0') ? db_config : ActiveRecord::DatabaseConfigurations.new(db_config)
+if ActiveRecord.version < Gem::Version.new('6.0')
+  module Rails
+    def self.env
+      ENV['RAILS_ENV']
+    end
+  end
+
+  ActiveRecord::Base.configurations = db_config
+else
+  ActiveRecord::Base.configurations = ActiveRecord::DatabaseConfigurations.new(db_config)
+end
 
 log_dir = File.join(File.expand_path('../../..', __dir__), 'log')
 FileUtils.mkdir_p(log_dir)
