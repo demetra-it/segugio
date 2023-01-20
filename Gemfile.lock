@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    segugio (0.1.1)
+    segugio (0.1.2)
       activerecord (>= 4.0)
       service-utils (~> 0.2)
 
